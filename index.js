@@ -1,12 +1,22 @@
 import express from "express";
+import dotenv from "dotenv";
 import db from "./koneksi.js";
 const app = express();
+
+import cors from "cors";
 import bodyParser from "body-parser";
 import routes from "./routes/routes.js";
-import dotenv from "dotenv";
+
 dotenv.config();
 
 const PORT = process.env.PORT;
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        OptionSuccessStatus: 200,
+    })
+)
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -74,5 +84,5 @@ app.use(bodyParser.json());
 app.use("/", routes)
 
 app.listen(PORT, () => {
-    console.log("server berjalan di https://localhost:3000" + PORT);
+    console.log("server berjalan di https://localhost:" + PORT);
 });
